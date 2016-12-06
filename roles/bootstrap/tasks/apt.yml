@@ -3,7 +3,7 @@
   action: apt update_cache=yes
 
 - name: Upgrade APT to the lastest packages
-  action: apt upgrade=safe
+  action: apt upgrade=dist
 
 - name: Install unattended-upgrades
   action: apt pkg=unattended-upgrades state=present
