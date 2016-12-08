@@ -1,0 +1,35 @@
+server {
+       listen         {{ ITKS_HOST }}:80;
+       server_name    {{ ITKS_HOSTNAME }};
+       return         301 https://$server_name$request_uri;
+}
+
+server {
+    listen {{ ITKS_HOST }}:443 ssl;
+    server_name {{ ITKS_HOSTNAME }};
+
+    client_max_body_size 128m;
+
+    access_log "{{ ITKS_BASE_DIR }}/logs/proxy_access_log";
+    error_log "{{ ITKS_BASE_DIR }}/logs/proxy_error_log";
+
+
+    location / {
+        proxy_pass http://localhost:{{ ITKS_APP_PORT }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    location /desktop {
+        alias {{ ITKS_BASE_DIR }}/desktop/build/;
+    }
+    location /static {
+        alias  {{ ITKS_BASE_DIR }}/static/;
+    }
+
+
+    ssl on;
+    ssl_certificate             /etc/ssl/certs/{{ NGINX_SSL_CERTIFICATE|basename }};
+    ssl_certificate_key         /etc/ssl/private/{{ NGINX_SSL_KEY|basename }};
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+}

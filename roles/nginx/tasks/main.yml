@@ -5,3 +5,12 @@
 - name: Remove default nginx configuration 
   action: file path=/etc/nginx/sites-enabled/default state=absent 
   notify: restart nginx 
+
+- name: Copying nginx configs for {{ nginx_sites }}
+  template:
+    src: "etc/nginx/sites-enabled/itks.j2"
+    dest: "/etc/nginx/sites-enabled/itks"
+    owner: root
+    group: root
+    mode: "0640"
+  notify: restart nginx

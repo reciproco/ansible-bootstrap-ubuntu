@@ -1,0 +1,6 @@
+ITKS_HOST: 0.0.0.0
+ITKS_HOSTNAME: prueba.redil.xyz
+ITKS_BASE_DIR: '/home/itks/app'
+ITKS_APP_PORT: 8070
+NGINX_SSL_CERTIFICATE: 'ssl-cert-snakeoil.pem'
+NGINX_SSL_KEY: 'ssl-cert-snakeoil.key'
